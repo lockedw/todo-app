@@ -1,38 +1,68 @@
 const form = document.querySelector("#todo-form");
-const todoInput = document.querySelector('#todo');
-const todoList = document.querySelector('.list-group');
+const todoInput = document.querySelector("#todo");
+const todoList = document.querySelector(".list-group");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
-const secondCardBody = document.querySelectorAll(".card-body")[1];
+const firstSecondBody = document.querySelectorAll(".card-body")[1];
 const filter = document.querySelector("#filter");
 const clearButton = document.querySelector("#clear-todos");
+/* Todoları seçme  */
 
 eventListeners();
-const newTodo = todoInput.value.trim();
-function eventListeners() {
-    form.addEventListener("submit", addTodo);
-    
-}
-// ! todo add fonksiyonu
 
+
+function eventListeners() {
+    form.addEventListener('submit',addTodo);
+}
 function addTodo(e) {
     const newTodo = todoInput.value.trim();
-    AddToDoUi(newTodo);
+
+
+    if(newTodo === ""){
+    showAlert("danger","Lütfen bir mesaj giriniz");
+    }
+  else {
+    showAlert("success","to-do başarılı bir şekilde eklendi");
+    addTodoToUI(newTodo);
+  }
+
+
+
+  function showAlert(type,message) {
+    const alert = document.createElement("div");
+    alert.className = `alert alert-${type}`
+    alert.textContent = message;
+    firstCardBody.appendChild(alert);
+    
+    console.log(alert)
+
+
+    setTimeout(() => {
+        alert.remove()
+    }, 1000);
+}
+    
+
+    
+
+
+
     e.preventDefault();
 }
-function AddToDoUi(e) {
-
-    const listitem = document.createElement("li");
+function addTodoToUI(newTodo) {
+    const listItem = document.createElement("li");
     const link = document.createElement("a");
-    // ? link oluşturma işlemi
+    
     link.href = "#";
     link.className = "delete-item";
-    link.innerHTML = "<i class = 'fa fa-remove'></i>";
-    listitem.className = "list-group-item d-flex justify-content-between";
-    listitem.appendChild(link);
+    link.innerHTML = "<i class = 'fa fa-remove'></i>";  
+    listItem.className= "list-group-item d-flex justify-content-between";
+    listItem.appendChild(document.createTextNode(newTodo));
+    listItem.appendChild(link);
 
-    listitem.
+    todoList.appendChild(listItem);
 
-    todoList.appendChild(listitem);
-    console.log(listitem);
+    todoInput.value = "";
+
+
+
 }
-
